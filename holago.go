@@ -7,11 +7,6 @@ import (
 	"time"
 )
 
-// HolaMundo http
-func HolaMundo(w http.ResponseWriter, req *http.Request) {
-	fmt.Fprintf(w, "<h1>Hola Mundo!</h1>")
-}
-
 // Usuario http
 func Usuario(w http.ResponseWriter, req *http.Request) {
 	fmt.Fprintf(w, "<h1>Hola Usuario</h1>")
@@ -31,8 +26,9 @@ func main() {
 		msg: "Hola Nuevo Mundo",
 	}
 	mux := http.NewServeMux()
+	fs := http.FileServer(http.Dir("public"))
 
-	mux.HandleFunc("/", HolaMundo)
+	mux.Handle("/", fs)
 	mux.HandleFunc("/user", Usuario)
 	mux.Handle("/hola", msg)
 
